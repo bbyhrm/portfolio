@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポートフォリオ</title>
+    <link rel="icon" href="img/icon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <!-- Vue.jsのCDNを追加 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-white text-gray-800">
+    <div id="app">
+        <header class="header">
+            <nav class="nav-container">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">{{ siteTitle }}</h1>
+                    <ul class="flex space-x-4">
+                        <li v-for="link in navigationLinks" :key="link.id">
+                            <a href="#" 
+                               class="hover:text-blue-500"
+                               @click.prevent="switchSection(link.id)">
+                                {{ link.text }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- プロフィールセクション -->
+            <section id="profile" class="section" v-show="isActive('profile')">
+                <h2 class="section-title">{{ profileTitle }}</h2>
+                <div class="profile-container">
+                    <div class="profile-grid">
+                        <img :src="profileImage" :alt="profileName" class="profile-image">
+                        <div>
+                            <div class="profile-details">
+                                <span class="profile-detail-label">名前</span>
+                                <span>{{ profileName }}</span>
+                            </div>
+                            <div class="profile-details">
+                                <span class="profile-detail-label">職業</span>
+                                <span>{{ profileOccupation }}</span>
+                            </div>
+                            <div class="profile-details">
+                                <span class="profile-detail-label">趣味</span>
+                                <span>{{ profileHobby }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スキルセクション -->
+            <section id="skills" class="section" v-show="isActive('skills')">
+                <h2 class="section-title">{{ skillsTitle }}</h2>
+                <div class="skills-grid">
+                    <div v-for="(skill, index) in skills" :key="index" class="skill-card">
+                        <h3>{{ skill.title }}</h3>
+                        <ul class="skill-list">
+                            <li v-for="(item, itemIndex) in skill.items" :key="itemIndex">{{ item }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 連絡先セクション -->
+            <section id="contact" class="section" v-show="isActive('contact')">
+                <h2 class="section-title">{{ contactTitle }}</h2>
+                <div class="contact-container">
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-label">電話番号：</span>
+                            <span>{{ contactInfo.tel }}</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">メール：</span>
+                            <span>{{ contactInfo.email }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 日記セクション -->
+            <section id="diary" class="section" v-show="isActive('diary')">
+                <h2 class="section-title">日記</h2>
+                <div class="diary-container">
+                    <div class="diary-card" @click="goToNextPage" v-if="currentDiaryPage < diaryPages.length - 1">
+                        <div class="diary-content">
+                            <h3 class="diary-date">{{ currentDiary.date }}</h3>
+                            <p class="diary-text">{{ currentDiary.content }}</p>
+                        </div>
+                    </div>
+                    <div class="diary-card" v-else>
+                        <div class="diary-content">
+                            <h3 class="diary-date">{{ currentDiary.date }}</h3>
+                            <p class="diary-text">{{ currentDiary.content }}</p>
+                        </div>
+                    </div>
+                    <div class="diary-date-buttons">
+                        <button v-for="(page, index) in diaryPages" 
+                                :key="index"
+                                class="date-button"
+                                :class="{ active: currentDiaryPage === index }"
+                                @click="goToPage(index)">
+                            {{ page.date }}
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- フッター -->
+        <footer class="footer">
+            <div class="footer-container">
+                <p class="copyright">&copy; {{ currentYear }} {{ siteTitle }}. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- スクリプトの参照を整理 -->
+    <script src="js/app.js"></script>
+</body>
+</html>

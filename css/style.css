@@ -1,0 +1,456 @@
+/* 基本スタイル */
+
+body {
+    font-family: 'Zen Old Mincho', serif;
+    line-height: 1.6;
+    color: #1a202c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* ヘッダー */
+.header {
+    position: fixed;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    z-index: 50;
+}
+
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* メインコンテンツ */
+.main-content {
+    padding-top: 4rem;
+    flex: 1;
+    min-height: calc(100vh - 4rem - 4rem); /* ヘッダーとフッターの高さを考慮 */
+}
+
+/* セクション共通 */
+.section {
+    padding: 5rem 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.section[v-show="false"] {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+
+.section[v-show="true"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* プロフィールセクション */
+.profile-container {
+    max-width: 72rem;
+    margin: 0 auto;
+}
+
+.profile-image {
+    width: 100%;
+    max-width: 28rem;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    aspect-ratio: 1.414/1;
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.profile-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0 1rem;
+}
+
+.profile-detail-label {
+    width: 3rem;
+    font-weight: 500;
+    text-align: left;
+    /* margin-right: 0.5rem; */
+}
+
+.profile-detail-value {
+    text-align: left;
+    flex: 1;
+}
+
+/* スキルセクション */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    padding-bottom: 2rem;
+}
+
+.skill-card {
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 0 0;
+    border-color: transparent transparent transparent transparent;
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.skill-card:hover::before {
+    border-width: 0 50px 50px 0;
+    border-color: transparent #3182ce transparent transparent;
+}
+
+.skill-card h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+}
+
+.skill-list {
+    list-style-type: none;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.skill-list li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #4a5568;
+}
+
+.skill-list li::before {
+    content: "•";
+    color: #3182ce;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* お問い合わせセクション */
+.contact-form {
+    max-width: 32rem;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.form-button {
+    background-color: #1a202c;
+    color: white;
+    padding: 0.5rem 1.5rem;
+}
+
+/* フッター */
+.footer {
+    background-color: #2e2420;
+    padding: 2rem 0;
+    width: 100%;
+    margin-top: auto;
+    position:absolute;
+    bottom:0;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.copyright {
+    color: #f1f1f1;
+    font-size: 0.9rem;
+}
+
+/* 連絡先セクション */
+.contact-container {
+    max-width: 32rem;
+    margin: 0 auto;
+}
+
+.contact-details {
+    background-color: #f7fafc;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact-label {
+    width: 8rem;
+    font-weight: 500;
+}
+
+.contact-link {
+    color: #3182ce;
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+/* レスポンシブデザイン */
+@media (min-width: 768px) {
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        align-items: center;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .profile-details {
+        padding: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 日記セクション */
+.diary-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.diary-date-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.date-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    background-color: #ffffff;
+    color: #4a5568;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.date-button:hover {
+    background-color: #f7fafc;
+    border-color: #cbd5e0;
+}
+
+.date-button.active {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+}
+
+.diary-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.diary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 0 0;
+    border-color: transparent transparent transparent transparent;
+    transition: all 0.3s ease;
+}
+
+.diary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.diary-card:hover::before {
+    border-width: 0 50px 50px 0;
+    border-color: transparent #3182ce transparent transparent;
+}
+
+.diary-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.diary-date {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+.diary-text {
+    color: #4a5568;
+    line-height: 1.7;
+}
+
+.diary-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.diary-prev,
+.diary-next {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.diary-prev:hover {
+    transform: translateX(-4px);
+}
+
+.diary-next:hover {
+    transform: translateX(4px);
+}
+
+.triangle {
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 20px solid #3182ce;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transition: border-left-color 0.3s ease;
+}
+
+.triangle-prev {
+    display: block;
+    width: 0;
+    height: 0;
+    border-right: 20px solid #3182ce;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transition: border-right-color 0.3s ease;
+}
+
+.diary-prev:hover .triangle-prev {
+    border-right-color: #2c5282;
+}
+
+.diary-next:hover .triangle {
+    border-left-color: #2c5282;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 767px) {
+    .diary-card::before {
+        border-width: 0 50px 50px 0;
+        border-color: transparent #3182ce transparent transparent;
+    }
+}
+
+@media (min-width: 768px) {
+    .diary-card:hover::before {
+        border-width: 0 50px 50px 0;
+        border-color: transparent #3182ce transparent transparent;
+    }
+}
+
+@media (min-width: 1024px) {
+    .diary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+} 
