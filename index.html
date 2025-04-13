@@ -17,10 +17,14 @@
             <nav class="nav-container">
                 <div class="flex justify-between items-center">
                     <h1 class="text-xl font-bold">{{ siteTitle }}</h1>
-                    <ul class="flex space-x-4">
+                    <button class="menu-button" @click="toggleMenu" :class="{ active: isMenuOpen }">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul class="nav-links" :class="{ active: isMenuOpen }">
                         <li v-for="link in navigationLinks" :key="link.id">
                             <a href="#" 
-                               class="hover:text-blue-500"
                                @click.prevent="switchSection(link.id)">
                                 {{ link.text }}
                             </a>
@@ -68,6 +72,34 @@
                 </div>
             </section>
 
+            <!-- 知見セクション -->
+            <section id="insights" class="section" v-show="isActive('insights')">
+                <h2 class="section-title">知見</h2>
+                <div class="insights-container">
+                    <div class="insights-grid">
+                        <div v-for="(insight, index) in insights" 
+                             :key="index" 
+                             class="insight-card"
+                             @click="showInsightDetail(index)">
+                            <div class="insight-header">
+                                <h3 class="insight-date">{{ insight.date }}</h3>
+                                <h4 class="insight-title">{{ insight.title }}</h4>
+                            </div>
+                            <p class="insight-summary">{{ insight.summary }}</p>
+                        </div>
+                    </div>
+                    <!-- 詳細表示モーダル -->
+                    <div class="insight-modal" v-if="showModal" @click.self="closeModal">
+                        <div class="insight-modal-content">
+                            <button class="modal-close" @click="closeModal">×</button>
+                            <h3 class="modal-date">{{ currentInsight.date }}</h3>
+                            <h4 class="modal-title">{{ currentInsight.title }}</h4>
+                            <div class="modal-content" v-html="currentInsight.content"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- 連絡先セクション -->
             <section id="contact" class="section" v-show="isActive('contact')">
                 <h2 class="section-title">{{ contactTitle }}</h2>
@@ -81,34 +113,6 @@
                             <span class="contact-label">メール：</span>
                             <span>{{ contactInfo.email }}</span>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 日記セクション -->
-            <section id="diary" class="section" v-show="isActive('diary')">
-                <h2 class="section-title">日記</h2>
-                <div class="diary-container">
-                    <div class="diary-card" @click="goToNextPage" v-if="currentDiaryPage < diaryPages.length - 1">
-                        <div class="diary-content">
-                            <h3 class="diary-date">{{ currentDiary.date }}</h3>
-                            <p class="diary-text">{{ currentDiary.content }}</p>
-                        </div>
-                    </div>
-                    <div class="diary-card" v-else>
-                        <div class="diary-content">
-                            <h3 class="diary-date">{{ currentDiary.date }}</h3>
-                            <p class="diary-text">{{ currentDiary.content }}</p>
-                        </div>
-                    </div>
-                    <div class="diary-date-buttons">
-                        <button v-for="(page, index) in diaryPages" 
-                                :key="index"
-                                class="date-button"
-                                :class="{ active: currentDiaryPage === index }"
-                                @click="goToPage(index)">
-                            {{ page.date }}
-                        </button>
                     </div>
                 </div>
             </section>

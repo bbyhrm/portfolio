@@ -6,16 +6,17 @@ createApp({
             siteTitle: 'ポートフォリオ',
             currentYear: new Date().getFullYear(),
             navigationLinks: [
-                { text: 'プロフィール', id: 'profile' },
-                { text: 'スキル', id: 'skills' },
-                { text: '日記', id: 'diary' },
-                { text: '連絡先', id: 'contact' }
+                { id: 'profile', text: 'プロフィール' },
+                { id: 'skills', text: 'スキル' },
+                { id: 'insights', text: '知見' },
+                { id: 'contact', text: '連絡先' }
             ],
+            isMenuOpen: false,
             activeSection: 'profile',
             profileTitle: 'プロフィール',
-            profileName: '山田 太郎',
-            profileOccupation: 'Webデザイナー',
-            profileHobby: '写真撮影、旅行',
+            profileName: 'okbboychships250499',
+            profileOccupation: '無職、ネット絵描き',
+            profileHobby: 'イラスト・漫画製作',
             profileImage: 'img/icon.png',
             profileDescription: 'フロントエンド開発を専門とするウェブ開発者です。ユーザー体験を重視した美しいウェブサイトの制作に情熱を持っています。',
             profileDetails: [
@@ -27,11 +28,11 @@ createApp({
             skillsTitle: 'スキル',
             skills: [
                 {
-                    title: 'デザイン',
-                    items: ['Photoshop', 'Illustrator', 'Figma']
+                    title: '使用ツール',
+                    items: ['cursor', 'clipstudio']
                 },
                 {
-                    title: '開発',
+                    title: '言語',
                     items: ['HTML', 'CSS', 'JavaScript', 'Vue.js']
                 },
                 {
@@ -44,58 +45,42 @@ createApp({
                 tel: '090-xxxx-xxxx',
                 email: 'example@example.com'
             },
-            diaryPages: [
+            insights: [
                 {
-                    date: '2025/4/13',
-                    content: '今日は新しいプロジェクトの打ち合わせがありました。クライアントとのミーティングで、ウェブサイトのデザインについて詳細な要望を伺うことができました。'
+                    date: '2024-03-01',
+                    title: 'Vue.jsの導入',
+                    summary: 'Vue.jsを導入し、SPAの実装方法について学びました。',
+                    content: '<p>Vue.jsの導入により、以下のメリットを得ることができました：</p><ul><li>コンポーネントベースの開発</li><li>リアクティブなデータバインディング</li><li>シンプルな状態管理</li></ul>'
                 },
                 {
-                    date: '2025/4/14',
-                    content: 'プロジェクトの初期デザインを作成しました。モダンで使いやすいインターフェースを目指して、いくつかのデザイン案を考えています。'
-                },
-                {
-                    date: '2025/4/15',
-                    content: 'デザインのフィードバックを受け、修正を行いました。クライアントからの要望を反映させ、より良いデザインに仕上げていきます。'
-                },
-                {
-                    date: '2025/4/16',
-                    content: 'コーディング作業を開始しました。レスポンシブデザインを意識しながら、モバイルファーストのアプローチで進めています。'
-                },
-                {
-                    date: '2025/4/17',
-                    content: 'プロジェクトの最終チェックを行いました。細かいバグの修正や、パフォーマンスの最適化を行い、完成に近づいています。'
+                    date: '2024-03-02',
+                    title: 'レスポンシブデザイン',
+                    summary: 'モバイルファーストのデザイン手法について学びました。',
+                    content: '<p>レスポンシブデザインの実装で重要なポイント：</p><ul><li>メディアクエリの活用</li><li>フレックスボックスとグリッドレイアウト</li><li>ビューポートの考慮</li></ul>'
                 }
             ],
-            currentDiaryPage: 0
+            showModal: false,
+            currentInsight: null
         };
     },
-    computed: {
-        currentDiary() {
-            return this.diaryPages[this.currentDiaryPage];
-        }
-    },
     methods: {
+        toggleMenu() {
+            this.isMenuOpen = !this.isMenuOpen;
+        },
         switchSection(sectionId) {
             this.activeSection = sectionId;
-            if (sectionId === 'diary') {
-                this.currentDiaryPage = 0;
-            }
+            this.isMenuOpen = false;
         },
         isActive(sectionId) {
             return this.activeSection === sectionId;
         },
-        goToPage(index) {
-            this.currentDiaryPage = index;
+        showInsightDetail(index) {
+            this.currentInsight = this.insights[index];
+            this.showModal = true;
         },
-        goToNextPage() {
-            if (this.currentDiaryPage < this.diaryPages.length - 1) {
-                this.currentDiaryPage++;
-            }
-        },
-        goToPrevPage() {
-            if (this.currentDiaryPage > 0) {
-                this.currentDiaryPage--;
-            }
+        closeModal() {
+            this.showModal = false;
+            this.currentInsight = null;
         }
     }
 }).mount('#app'); 
