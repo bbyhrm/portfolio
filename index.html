@@ -3,45 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ポートフォリオサイト">
     <title>ポートフォリオ</title>
     <link rel="icon" href="img/icon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap" rel="stylesheet">
-    <!-- Vue.jsのCDNを追加 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
-<body class="bg-white text-gray-800">
+<body>
     <div id="app">
-        <header class="header">
-            <nav class="nav-container">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-xl font-bold">{{ siteTitle }}</h1>
-                    <button class="menu-button" @click="toggleMenu" :class="{ active: isMenuOpen }">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                    <ul class="nav-links" :class="{ active: isMenuOpen }">
-                        <li v-for="link in navigationLinks" :key="link.id">
-                            <a href="#" 
-                               @click.prevent="switchSection(link.id)">
-                                {{ link.text }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        <header class="header" role="banner">
+            <nav class="nav-container" role="navigation" aria-label="メインメニュー">
+                <h1 class="site-title" @click="scrollToTop" role="heading" aria-level="1">{{ siteTitle }}</h1>
+                <button class="menu-button" 
+                        @click="toggleMenu" 
+                        :class="{ active: isMenuOpen }"
+                        aria-label="メニュー"
+                        aria-expanded="false"
+                        :aria-expanded="isMenuOpen">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" :class="{ active: isMenuOpen }" role="menu">
+                    <li v-for="link in navigationLinks" :key="link.id" role="none">
+                        <a href="#" 
+                           @click.prevent="scrollToSection(link.id)"
+                           role="menuitem">
+                            {{ link.text }}
+                        </a>
+                    </li>
+                </ul>
             </nav>
         </header>
 
-        <main class="main-content">
+        <main class="main-content" role="main">
             <!-- プロフィールセクション -->
-            <section id="profile" class="section" v-show="isActive('profile')">
-                <h2 class="section-title">{{ profileTitle }}</h2>
+            <section id="profile" class="section" aria-labelledby="profile-title">
+                <h2 id="profile-title" class="section-title">{{ profileTitle }}</h2>
                 <div class="profile-container">
                     <div class="profile-grid">
-                        <img :src="profileImage" :alt="profileName" class="profile-image">
-                        <div>
+                        <img :src="profileImage" 
+                             :alt="profileName" 
+                             class="profile-image"
+                             width="300"
+                             height="300">
+                        <div class="profile-info">
                             <div class="profile-details">
                                 <span class="profile-detail-label">名前</span>
                                 <span>{{ profileName }}</span>
@@ -60,20 +68,24 @@
             </section>
 
             <!-- スキルセクション -->
-            <section id="skills" class="section" v-show="isActive('skills')">
-                <h2 class="section-title">{{ skillsTitle }}</h2>
+            <section id="skills" class="section" aria-labelledby="skills-title">
+                <h2 id="skills-title" class="section-title">{{ skillsTitle }}</h2>
                 <div class="skills-grid">
-                    <div v-for="(skill, index) in skills" :key="index" class="skill-card">
+                    <div v-for="(skill, index) in skills" 
+                         :key="index" 
+                         class="skill-card"
+                         role="article">
                         <h3>{{ skill.title }}</h3>
                         <ul class="skill-list">
-                            <li v-for="(item, itemIndex) in skill.items" :key="itemIndex">{{ item }}</li>
+                            <li v-for="(item, itemIndex) in skill.items" 
+                                :key="itemIndex">{{ item }}</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
             <!-- 知見セクション -->
-            <section id="insights" class="section" v-show="isActive('insights')">
+            <section id="insights" class="section">
                 <h2 class="section-title">知見</h2>
                 <div class="insights-container">
                     <div class="insights-grid">
@@ -101,7 +113,7 @@
             </section>
 
             <!-- 連絡先セクション -->
-            <section id="contact" class="section" v-show="isActive('contact')">
+            <section id="contact" class="section">
                 <h2 class="section-title">{{ contactTitle }}</h2>
                 <div class="contact-container">
                     <div class="contact-details">
@@ -118,6 +130,11 @@
             </section>
         </main>
 
+        <!-- トップへ戻るボタン -->
+        <button class="scroll-top-button" @click="scrollToTop" v-show="showScrollTop">
+            ↑
+        </button>
+
         <!-- フッター -->
         <footer class="footer">
             <div class="footer-container">
@@ -126,7 +143,6 @@
         </footer>
     </div>
 
-    <!-- スクリプトの参照を整理 -->
     <script src="js/app.js"></script>
 </body>
 </html>

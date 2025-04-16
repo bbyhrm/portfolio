@@ -5,6 +5,7 @@ createApp({
         return {
             siteTitle: 'ポートフォリオ',
             currentYear: new Date().getFullYear(),
+            showScrollTop: false,
             navigationLinks: [
                 { id: 'profile', text: 'プロフィール' },
                 { id: 'skills', text: 'スキル' },
@@ -12,19 +13,11 @@ createApp({
                 { id: 'contact', text: '連絡先' }
             ],
             isMenuOpen: false,
-            activeSection: 'profile',
             profileTitle: 'プロフィール',
             profileName: 'okbboychships250499',
             profileOccupation: '無職、ネット絵描き',
             profileHobby: 'イラスト・漫画製作',
             profileImage: 'img/icon.png',
-            profileDescription: 'フロントエンド開発を専門とするウェブ開発者です。ユーザー体験を重視した美しいウェブサイトの制作に情熱を持っています。',
-            profileDetails: [
-                { label: '年齢', value: '28歳' },
-                { label: '所在地', value: '東京都' },
-                { label: 'メール', value: 'example@example.com' },
-                { label: 'GitHub', value: 'github.com/username' }
-            ],
             skillsTitle: 'スキル',
             skills: [
                 {
@@ -64,15 +57,21 @@ createApp({
         };
     },
     methods: {
+        handleScroll() {
+            this.showScrollTop = window.scrollY > 300;
+        },
         toggleMenu() {
             this.isMenuOpen = !this.isMenuOpen;
         },
-        switchSection(sectionId) {
-            this.activeSection = sectionId;
-            this.isMenuOpen = false;
+        scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                this.isMenuOpen = false;
+            }
         },
-        isActive(sectionId) {
-            return this.activeSection === sectionId;
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         },
         showInsightDetail(index) {
             this.currentInsight = this.insights[index];
@@ -82,5 +81,11 @@ createApp({
             this.showModal = false;
             this.currentInsight = null;
         }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
-}).mount('#app'); 
+}).mount('#app');
